@@ -13,13 +13,11 @@ import Alamofire
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var enterButton: UIButton!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var emptyButtonFirst: UIButton!
+    @IBOutlet weak var emailTextField: MatetialTextField!
+    @IBOutlet weak var passwordTextField: MatetialTextField!
     @IBOutlet weak var emptyButtonSecond: UIButton!
+    
     
     var weatherResponse = WeatherResponse()
     
@@ -27,10 +25,9 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.title = "Авторизация"
         
-        setupLables()
         setupEnterButton()
         setupTextField()
-        setupFirstEmptyButton()
+        
         setupSecondEmptyButton()
         
         registerForKeyboardNotification()
@@ -39,6 +36,10 @@ class LoginViewController: UIViewController {
         checkTextFieldIsEmpty()
         
         validationCheck()
+
+        passwordTextField.setupRightButton()
+        
+        setupMessageView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,8 +61,10 @@ class LoginViewController: UIViewController {
 
     func changeStatusEntryButton() {
         if enterButton.backgroundColor == UIColor.rgb(red: 208, green: 155, blue: 0) && enterButton.isEnabled == false {
-            enterButton.backgroundColor = UIColor.rgb(red: 255, green: 155, blue: 0)
-            enterButton.isEnabled = true
+            UIView.animate(withDuration: 0.3, animations: {
+                self.enterButton.backgroundColor = UIColor.rgb(red: 255, green: 155, blue: 0)
+                self.enterButton.isEnabled = true
+            })
         }
     }
     
@@ -80,9 +83,6 @@ class LoginViewController: UIViewController {
     // MARK - validation check of email and password
     
     func validationCheck() {
-        
-        emailTextField.placeholder = "Введите логин ..."
-        passwordTextField.placeholder = "Введите пароль ..."
         
         emailTextField.addTarget(self, action: #selector(handleEmailChange), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(handlePasswordChange), for: .editingChanged)
@@ -109,21 +109,72 @@ class LoginViewController: UIViewController {
     @objc func handleEmailChange() {
         guard let text = emailTextField.text else { return }
         
+        let (valid, message) = validateTextField(emailTextField)
+        
         if text.isValid(.email) {
             print("Valid text")
             emailTextField.textColor = .black
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self.emailTextField.messageLabel.isHidden = valid
+            })
         } else {
             emailTextField.textColor = .red
+
+            emailTextField.messageLabel.text = message
+            UIView.animate(withDuration: 0.3, animations: {
+                self.emailTextField.messageLabel.isHidden = valid
+                self.emailTextField.messageLabel.textColor = .red
+            })
         }
     }
     
     @objc func handlePasswordChange() {
         guard let text = passwordTextField.text else { return }
+        
+        let (valid, message) = validateTextField(passwordTextField)
+        
         if text.isValid(.password) {
             passwordTextField.textColor = .black
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self.passwordTextField.messageLabel.isHidden = valid
+            })
         } else {
             passwordTextField.textColor = .red
+            
+            passwordTextField.messageLabel.text = message
+            UIView.animate(withDuration: 0.3, animations: {
+                self.passwordTextField.messageLabel.isHidden = valid
+                self.passwordTextField.messageLabel.textColor = .red
+            })
         }
+    }
+    
+    // validation identifier message show helper
+    func validateTextField(_ textField: UITextField) -> (Bool, String?) {
+        guard let text = textField.text else {
+            return (false, nil)
+        }
+        
+        if textField == emailTextField {
+            
+            if text.isEmpty {
+                return (!text.isEmpty, "Это поле не может быть пустым")
+            } else {
+                return (text.isValid(.email), "Не корректная почта")
+            }
+        }
+        
+        if textField == passwordTextField {
+            if text.isEmpty {
+                return (!text.isEmpty, "Это поле не может быть пустым")
+            } else {
+                return (text.isValid(.password), "Не корректный пароль")
+            }
+        }
+        
+        return (false, nil)
     }
     
     // MARK - update content position
@@ -153,44 +204,35 @@ class LoginViewController: UIViewController {
         scrollView.contentOffset = CGPoint.zero
     }
     
-    // MARK -
-    
-    func setupLables () {
-        emailLabel.text = "Почта"
-        passwordLabel.text = "Пароль"
-        
-        emailLabel.font = UIFont.systemFont(ofSize: 13)
-        emailLabel.textColor = UIColor.rgb(red: 121, green: 121, blue: 121)
-
-        passwordLabel.font = UIFont.systemFont(ofSize: 13)
-        passwordLabel.textColor = UIColor.rgb(red: 121, green: 121, blue: 121)
-    }
+    // MARK - setup
     
     func setupEnterButton() {
         enterButton.setTitle("Войти", for: .normal)
         enterButton.layer.cornerRadius = 22
         enterButton.setTitleColor(UIColor.rgb(red: 255, green: 255, blue: 255), for: .normal)
     }
-    
+
     func setupTextField() {
+        emailTextField.placeholder = "Почта"
+        emailTextField.placeholderColor = UIColor(red: 121/255, green: 121/255, blue: 121/255, alpha: 1)
+        emailTextField.borderStyle = .none
         emailTextField.backgroundColor = UIColor.clear
+        
+        passwordTextField.placeholder = "Пароль"
+        passwordTextField.placeholderColor = UIColor.rgb(red: 121, green: 121, blue: 121)
+        passwordTextField.borderStyle = .none
         passwordTextField.backgroundColor = UIColor.clear
         passwordTextField.isSecureTextEntry = true
-    }
-    
-    func setupFirstEmptyButton() {
-        emptyButtonFirst.backgroundColor = UIColor.clear
-        emptyButtonFirst.layer.borderWidth = 1.0
-        emptyButtonFirst.layer.cornerRadius = 4
-        emptyButtonFirst.layer.borderColor = UIColor.rgb(red: 234, green: 234, blue: 234).cgColor
-        emptyButtonFirst.setTitle("Забыли пароль?", for: .normal)
-        emptyButtonFirst.tintColor = UIColor.rgb(red: 121, green: 121, blue: 121)
-        emptyButtonFirst.titleLabel?.font = UIFont.systemFont(ofSize: 12)
     }
     
     func setupSecondEmptyButton() {
         emptyButtonSecond.setTitle("У мня еще нет аккаунта. Создать.", for: .normal)
         emptyButtonSecond.tintColor = UIColor.rgb(red: 56, green: 133, blue: 199)
         emptyButtonSecond.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+    }
+    
+    func setupMessageView() {
+        emailTextField.messageLabel.isHidden = true
+        passwordTextField.messageLabel.isHidden = true
     }
 }

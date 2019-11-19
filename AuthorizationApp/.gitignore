@@ -1,5 +1,6 @@
 # Mac OS X
 *.DS_Store
+**/*.DS_Store
 
 # Xcode build files
 DerivedData/
@@ -15,7 +16,3 @@ xcuserdata/
 # Carthage
 
 Carthage/Build
-
-.DS_Store
-.AppleDouble
-.LSOverride

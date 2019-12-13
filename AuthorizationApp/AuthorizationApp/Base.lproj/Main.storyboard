@@ -26,10 +26,10 @@
             </objects>
             <point key="canvasLocation" x="-987" y="132"/>
         </scene>
-        <!--Start View Controller-->
+        <!--StartVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="StartViewController" customModule="AuthorizationApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="StartVC" customModule="AuthorizationApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -56,7 +56,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Rvn-dr-EfJ"/>
                     <connections>
-                        <outlet property="startButton" destination="lEs-a1-gEa" id="M4Z-FU-P3i"/>
+                        <outlet property="startButton" destination="lEs-a1-gEa" id="IUh-oX-MgK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -66,7 +66,7 @@
         <!--Login View Controller-->
         <scene sceneID="77s-Yl-kq3">
             <objects>
-                <viewController id="MlY-6t-b56" userLabel="Login View Controller" customClass="LoginViewController" customModule="AuthorizationApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="MlY-6t-b56" userLabel="Login View Controller" customClass="LoginVC" customModule="AuthorizationApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6C6-OQ-9Qq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -87,7 +87,7 @@
                                                             <constraint firstAttribute="height" constant="1" id="bpX-As-Sq0"/>
                                                         </constraints>
                                                     </view>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HyH-MD-kGa" customClass="MatetialTextField" customModule="AuthorizationApp" customModuleProvider="target">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HyH-MD-kGa" customClass="MatetialTextfield" customModule="AuthorizationApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="17" width="384" height="20"/>
                                                         <color key="backgroundColor" red="0.99975014839999998" green="1" blue="0.20285778839999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="textColor"/>
@@ -101,7 +101,7 @@
                                                             <constraint firstAttribute="height" constant="1" id="Ug4-pE-0Eq"/>
                                                         </constraints>
                                                     </view>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jp9-Iq-QtV" customClass="MatetialTextField" customModule="AuthorizationApp" customModuleProvider="target">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jp9-Iq-QtV" customClass="MatetialTextfield" customModule="AuthorizationApp" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="70" width="384" height="20"/>
                                                         <color key="backgroundColor" red="0.99975014839999998" green="1" blue="0.20285778839999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="textColor"/>
@@ -123,7 +123,7 @@
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <connections>
-                                                            <action selector="showAlertButtonTapped:" destination="MlY-6t-b56" eventType="touchUpInside" id="Otg-oC-5e6"/>
+                                                            <action selector="tapEnterButton:" destination="MlY-6t-b56" eventType="touchUpInside" id="FRD-Tw-LxE"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efB-Rx-cHa">
@@ -168,11 +168,11 @@
                         <viewLayoutGuide key="safeArea" id="KxC-Tc-Nu9"/>
                     </view>
                     <connections>
-                        <outlet property="emailTextField" destination="HyH-MD-kGa" id="NkJ-MM-LsP"/>
-                        <outlet property="emptyButtonSecond" destination="efB-Rx-cHa" id="4RK-mW-E9W"/>
-                        <outlet property="enterButton" destination="r2k-VB-uZO" id="IS4-LT-7BU"/>
-                        <outlet property="passwordTextField" destination="Jp9-Iq-QtV" id="7s2-BB-Edd"/>
-                        <outlet property="scrollView" destination="mz1-j0-hCg" id="fEZ-RQ-QEx"/>
+                        <outlet property="emailTextField" destination="HyH-MD-kGa" id="dUj-vZ-M29"/>
+                        <outlet property="emptyButton" destination="efB-Rx-cHa" id="gY9-qj-mEG"/>
+                        <outlet property="enterButton" destination="r2k-VB-uZO" id="iEd-yJ-Lrk"/>
+                        <outlet property="passwordTextField" destination="Jp9-Iq-QtV" id="LWa-e0-lNq"/>
+                        <outlet property="scrollView" destination="mz1-j0-hCg" id="Vda-XM-uPQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X2P-Rj-2CN" userLabel="First Responder" sceneMemberID="firstResponder"/>
